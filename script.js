@@ -89,17 +89,14 @@ const handSort = (randomHand) => {
 
 	if(outcomePairs = []){
 	
-	for (let i=0; i < values.length; i++){
-	
-	let previous = values[i-1]
-	let current = values[i]
+	//Works if this is passed as randomHand randomHand = ["7h", "4h", "3h", "5h","6h"] but fails on randomized hand - why?
+	let valuesStraight = JSON.parse(values.map(it => it.length === 1 ? it[0] : it).join(""))
+	let straights = "2345A | 23456 | 34567 | 45678 | 56789 | 6789T | 789JT | 89JTQ | 9JTKQ | AJTKQ"
 
-    if(previous+1 !== current){
-    	outcomeStraight.push(values[i])
-	} else {
-		outcomeStraight = []
+	if(straights.includes(valuesStraight)) {
+		outcomeStraight.push(values)
 	}
-	} 
+
 	} console.log('straight', outcomeStraight)
 
 
@@ -120,4 +117,9 @@ const handSort = (randomHand) => {
 	}
 	}console.log('flush', outcomeFlush)
 
+//Checking for straight flush
+
+	if(outcomeStraight&&outcomeFlush) {
+		console.log("straightflush")
+	}
 }
