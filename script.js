@@ -17,7 +17,6 @@ const diamonds = cards.map(it => it+suits.Diamonds)
 
 //Constructing deck
 const deck = [...hearts, ...clubs, ...spades, ...diamonds]
-const deck2 = [...cards,...cards,...cards,...cards]
 
 //Initializing empty hand
 let randomHand = []
@@ -25,7 +24,7 @@ let randomHand = []
 //Randomizing hand 
 const handRandomizer = (cardsInHand) => {
 
-	randomHand = Array.from({length:cardsInHand || 5},(v,i)=> i = deck2[Math.floor(Math.random() * deck2.length)])
+	randomHand = Array.from({length:cardsInHand || 5},(v,i)=> i = deck[Math.floor(Math.random() * deck.length)])
 	return randomHand
 
 }
@@ -33,7 +32,26 @@ const handRandomizer = (cardsInHand) => {
 //Sorting the hand
 const handSort = (randomHand) => {
 
-	const returnable = randomHand.reduce((acc, it) => {
+//Setting empty array for final outcome
+	
+	let outcome = []
+
+//Splitting the suits from values
+
+	const splitValues = []
+	const splitSuits = []
+
+	for(let i=0; i<randomHand.length;i++){
+		let split = randomHand[i].split("")
+		splitValues.push(split[0])
+		splitSuits.push(split[1])
+
+	}console.log(splitValues, splitSuits)
+
+
+//Sorting the values
+
+	const returnable = splitValues.reduce((acc, it) => {
 
     if (acc[it]) {
       acc[it] = [...acc[it], it];
@@ -50,11 +68,9 @@ const handSort = (randomHand) => {
 
 //Calculating pairs/triples/quads in the hand
 
-	
-
 	let outcomePairs = []
 
-	for(i=0;i<values.length;i++){
+	for(let i=0;i<values.length;i++){
 	if(values[i].length == 2){
 		outcomePairs.push(values[i])
 	} else if(values[i].length == 3){
@@ -62,34 +78,46 @@ const handSort = (randomHand) => {
 	} else if(values[i].length == 4){
 		outcomePairs.push(values[i])
 	} else {
-		outcomePairs = []
+		console.log('not a pair', values[i])
 	}
-	} console.log(outcomePairs)
+	} console.log('pairs', outcomePairs)
 	
 
 //Calculating straight in the hand
-
-
+	
 	let outcomeStraight = []
 
-	for (let i =0; i < values.length; i++){
+	if(outcomePairs = []){
+	
+	for (let i=0; i < values.length; i++){
 	
 	let previous = values[i-1]
 	let current = values[i]
 
     if(previous+1 !== current){
-    	outcomeStraight = []
+    	outcomeStraight.push(values[i])
 	} else {
-		outcomeStraight.push(values[i])
+		outcomeStraight = []
 	}
-	} console.log(outcomeStraight)
+	} 
+	} console.log('straight', outcomeStraight)
+
+
+//Checking for flush in the hand
 	
+	let outcomeFlush = []
 
+	if(outcomePairs = []){
+	flushHearts = splitSuits.every(it=> it==="h")
+	flushClubs = splitSuits.every(it=> it==="c")
+	flushDiamonds = splitSuits.every(it=> it==="d")
+	flushSpades = splitSuits.every(it=> it==="s")
 
-
-	const outcomeFlush = () => {
-
-
+	if(flushHearts||flushClubs||flushDiamonds||flushSpades){
+		outcomeFlush = {Hearts:flushHearts,Clubs: flushClubs,Diamonds: flushDiamonds,Spades: flushSpades}
+	} else {
+		outcomeFlush = []
 	}
+	}console.log('flush', outcomeFlush)
 
 }
