@@ -89,12 +89,13 @@ const handSort = (randomHand) => {
 
 	if(outcomePairs = []){
 	
-	//Works if this is passed as randomHand randomHand = ["7h", "4h", "3h", "5h","6h"] but fails on randomized hand - why?
-	let valuesStraight = JSON.parse(values.map(it => it.length === 1 ? it[0] : it).join(""))
-	let straights = "2345A | 23456 | 34567 | 45678 | 56789 | 6789T | 789JT | 89JTQ | 9JTKQ | AJTKQ"
-
+	let valuesStraight = JSON.parse(JSON.stringify(values.flat().map(it => it.length === 1 ? it[0] : it).join("")))
+	let straights = "2345A | 23456 | 34567 | 45678 | 56789 | 6789T | 789JT | 89JQT | 9JKQT | AJKQT"
+	console.log(valuesStraight)
 	if(straights.includes(valuesStraight)) {
 		outcomeStraight.push(values)
+	} else {
+		outcomeStraight = false
 	}
 
 	} console.log('straight', outcomeStraight)
@@ -113,7 +114,7 @@ const handSort = (randomHand) => {
 	if(flushHearts||flushClubs||flushDiamonds||flushSpades){
 		outcomeFlush = {Hearts:flushHearts,Clubs: flushClubs,Diamonds: flushDiamonds,Spades: flushSpades}
 	} else {
-		outcomeFlush = []
+		outcomeFlush = false
 	}
 	}console.log('flush', outcomeFlush)
 
